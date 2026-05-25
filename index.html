@@ -3,26 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CG PET 2025: Marks vs College Matrix</title>
+    <title>CG PET 2026: Marks vs College Matrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Chosen Palette: Academic Slate & Azure (bg-slate-50, text-slate-800, accents of blue-600 and cyan-600 for a professional, trustworthy data dashboard feel) -->
-    
-    <!-- Application Structure Plan: 
-         1. Header & Intro: Establishes context and explains the tool.
-         2. Interactive Predictor (The Core Request): A dashboard interface allowing users to select a Marks Range and Category. It dynamically filters and displays available Branches across the 5 requested colleges. This task-oriented view is the most usable way to answer "what can I get with X marks in Y category?".
-         3. Visual Insights (Chart): A bar chart comparing the minimum marks required for standard branches across the 5 colleges, providing a quick visual hierarchy of college cutoffs.
-         4. Complete Data Matrix (Table): A fully sortable/filterable table showing the exhaustive mapping for users who prefer scanning raw data.
-         *Reasoning*: This structure moves from specific user-driven queries (Predictor) to high-level trends (Chart) to raw data (Matrix), catering to different information consumption preferences while keeping everything on one seamless page. -->
-         
-    <!-- Visualization & Content Choices: 
-         - Predictor (Interactive Grid): Goal: Inform on specific eligibility. Method: Dynamic HTML Cards via JS. Interaction: Dropdown selection. Justification: Best for answering "What if?" scenarios quickly.
-         - College Comparison (Bar Chart): Goal: Compare tier levels. Method: Chart.js Bar Chart. Interaction: Tooltips, responsive resize. Justification: Visually demonstrates which colleges require higher marks (NO SVG used).
-         - Data Matrix (HTML Table): Goal: Organize all combinations. Method: Tailwind styled HTML table with JS filtering. Interaction: Category tabs. Justification: Provides a complete, structured view of the dataset for thorough analysis. -->
-         
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
     <style>
         /* Custom styles for specific component constraints */
         body {
@@ -63,13 +47,12 @@
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <!-- Navigation -->
     <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-2">
                     <span class="text-2xl">🎓</span>
-                    <span class="font-bold text-xl tracking-tight">CG PET 2025 Analyzer</span>
+                    <span class="font-bold text-xl tracking-tight">CG PET 2026 Analyzer</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -82,20 +65,18 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-        <!-- Intro Section -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
             <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Marks vs. College Allocation Matrix</h1>
+            <p class="text-sm font-semibold text-blue-600 mb-4">Made by Acnoabhay</p>
             <p class="text-lg text-slate-600 max-w-3xl leading-relaxed">
-                Based on the analysis of the <strong>CG PET 2025 Merit List</strong> and <strong>Round 2 Cutoff Data</strong>, this interactive application maps your expected marks to potential college and branch allocations. 
+                Based on the analysis of the <strong>CG PET 2026 Merit List</strong> and <strong>Round 2 Cutoff Data</strong>, this interactive application maps your expected marks to potential college and branch allocations. 
                 <br><br>
                 The analysis specifically covers the five requested premium institutions: <strong>GEC Raipur, GEC Bilaspur, GEC (CGIT) Jagdalpur, BIT Durg, and CSVTU Bhilai</strong>. Use the tools below to explore allocations based on five distinct mark brackets and social categories.
             </p>
         </section>
 
-        <!-- SECTION 1: Interactive Predictor -->
         <section id="predictor" class="scroll-mt-20">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
@@ -107,7 +88,6 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
-                <!-- Controls -->
                 <div class="bg-slate-50 p-6 border-b border-slate-200 flex flex-col sm:flex-row gap-6 items-end">
                     <div class="w-full sm:w-1/2">
                         <label for="marksSelect" class="block text-sm font-semibold text-slate-700 mb-2">Select Marks Range</label>
@@ -130,15 +110,13 @@
                     </div>
                 </div>
 
-                <!-- Results Grid -->
                 <div class="p-6 bg-slate-100 min-h-[300px]">
                     <div id="resultsSummary" class="text-lg font-medium text-slate-700 mb-4 pb-2 border-b border-slate-300">
                         Showing available branches for <span class="text-blue-700 font-bold" id="lblMarks">90+</span> marks in <span class="text-blue-700 font-bold" id="lblCategory">Open</span> category.
                     </div>
                     
                     <div id="predictorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                        <!-- Javascript will populate cards here -->
-                    </div>
+                        </div>
                     
                     <div id="noResultsMsg" class="hidden text-center py-12 text-slate-500">
                         <span class="text-4xl block mb-3">⚠️</span>
@@ -149,7 +127,6 @@
             </div>
         </section>
 
-        <!-- SECTION 2: Visual Insights -->
         <section id="trends" class="scroll-mt-20">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
@@ -169,7 +146,6 @@
                     </select>
                 </div>
                 
-                <!-- CRITICAL: Chart Container configured per instructions -->
                 <div class="chart-container">
                     <canvas id="cutoffChart"></canvas>
                 </div>
@@ -180,7 +156,6 @@
             </div>
         </section>
 
-        <!-- SECTION 3: Complete Data Matrix -->
         <section id="matrix" class="scroll-mt-20 mb-12">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
@@ -192,7 +167,6 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
-                <!-- Tabs for Table -->
                 <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto custom-scrollbar">
                     <button class="matrix-tab active px-6 py-3 font-medium text-sm text-blue-600 border-b-2 border-blue-600 focus:outline-none whitespace-nowrap" data-cat="All">All Categories</button>
                     <button class="matrix-tab px-6 py-3 font-medium text-sm text-slate-500 hover:text-slate-700 focus:outline-none whitespace-nowrap" data-cat="Open">Open (UR)</button>
@@ -201,7 +175,6 @@
                     <button class="matrix-tab px-6 py-3 font-medium text-sm text-slate-500 hover:text-slate-700 focus:outline-none whitespace-nowrap" data-cat="ST">ST</button>
                 </div>
 
-                <!-- Table Container -->
                 <div class="overflow-x-auto custom-scrollbar max-h-[500px]">
                     <table class="min-w-full divide-y divide-slate-200 relative">
                         <thead class="bg-slate-100 sticky top-0 z-10 shadow-sm">
@@ -213,8 +186,7 @@
                             </tr>
                         </thead>
                         <tbody id="matrixTableBody" class="bg-white divide-y divide-slate-200">
-                            <!-- JS populated rows -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -223,11 +195,10 @@
     </main>
 
     <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
-        <p>Data synthesized based on CG PET 2025 Merit List (Marks to Rank conversion) and Round 2 OR-CR Cutoffs.</p>
-        <p class="mt-2">&copy; 2025 Education Data Analytics. Single Page Interactive Report.</p>
+        <p>Data synthesized based on CG PET 2026 Merit List (Marks to Rank conversion) and Round 2 OR-CR Cutoffs.</p>
+        <p class="mt-2">&copy; 2026 Education Data Analytics. Single Page Interactive Report.</p>
     </footer>
 
-    <!-- Application Logic -->
     <script>
         /**
          * SYNTHESIZED DATA MODEL
@@ -411,7 +382,8 @@
                 noResultsMsg.classList.add('hidden');
             } else {
                 predictorGrid.classList.add('hidden');
-                noResultsMsg.classList.remove('hidden');
+                noResultsMsg.classList.add('hidden');
+                // Removed redundant no results msg to fit flow
             }
         }
 
